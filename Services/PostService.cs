@@ -1,4 +1,5 @@
 ﻿using HTTPclient.Models;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Text.Json;
 
@@ -21,17 +22,17 @@ namespace HTTPclient.Services
             };
         }
 
-        public async Task<List<Post>> getPosts()
+        public async Task<ObservableCollection<Post>> getPosts()
         {
             Uri uri = new Uri("https://jsonplaceholder.typicode.com/posts");
-            List<Post> items = new List<Post>();
+            ObservableCollection<Post> items = new ObservableCollection<Post>();
             try
             {
                 HttpResponseMessage response = await httpClient.GetAsync(uri);
                 if (response.IsSuccessStatusCode)
                 {
                     string content = await response.Content.ReadAsStringAsync();
-                    items =  JsonSerializer.Deserialize<List<Post>>(content, jsonSerializerOptions);
+                    items =  JsonSerializer.Deserialize<ObservableCollection<Post>>(content, jsonSerializerOptions);
                     
                 }
             }
